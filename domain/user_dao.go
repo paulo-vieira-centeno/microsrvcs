@@ -1,8 +1,9 @@
 package domain
 
 import (
-	"errors"
-	"fmt"
+	"net/http"
+	"paulocenteno/microsrvcs/utils"
+	error_utils "paulocenteno/microsrvcs/utils"
 )
 
 var (
@@ -15,9 +16,13 @@ var (
 	}
 )
 
-func GetUser(userId int64) (*User, error) {
+func GetUser(userId int64) (*User, *error_utils.AppError) {
 	if user := users[userId]; user != nil {
 		return user, nil
 	}
-	return nil, errors.New(fmt.Sprintf("User %v not found!", userId))
+	return nil, &utils.AppError{
+		Msg:    "User not found",
+		Status: http.StatusNotFound,
+		Code:   "not_found",
+	}
 }
