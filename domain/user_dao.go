@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"net/http"
 	"paulocenteno/microsrvcs/utils"
 	error_utils "paulocenteno/microsrvcs/utils"
@@ -8,7 +9,7 @@ import (
 
 var (
 	users = map[int64]*User{
-		123: &User{Id: 1,
+		123: &User{Id: 123,
 			FName: "Zion",
 			LName: "Phelps",
 			Email: "zion@phelps.com",
@@ -21,7 +22,7 @@ func GetUser(userId int64) (*User, *error_utils.AppError) {
 		return user, nil
 	}
 	return nil, &utils.AppError{
-		Msg:    "User not found",
+		Msg:    fmt.Sprintf("User %v not found", userId),
 		Status: http.StatusNotFound,
 		Code:   "not_found",
 	}
